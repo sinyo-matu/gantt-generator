@@ -1,0 +1,15 @@
+[package]
+name = "wbs-renderer"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+axum = "0.4.5"
+dirs-next = "2.0.0"
+serde = { version = "1.0.136", features = ["derive"] }
+tera = "1.15.0"
+thiserror = "1.0.30"
+tokio = { version = "1.17.0", features = ["rt-multi-thread","macros"] }
+toml = "0.5.8"

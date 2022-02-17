@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</head>
+
+<body>
+    {% for gantt in gantts %}
+    <section>
+        <div class="mermaid" id="{{loop.index}}-{{gantt.title}}">
+            gantt
+            title {{ gantt.title }}
+            dateFormat YYYY-MM-DD
+            {% for section in gantt.sections %}
+            section {{ section.name}}
+            {{section.content}}
+            {% endfor %}
+        </div>
+        <button id="download" name="{{loop.index}}-{{gantt.title}}"
+            onclick="handleDownloadButtonOnClick(event)">ダウンロード</button>
+    </section>
+    {% endfor %}
+
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script>
+        function handleDownloadButtonOnClick(event) {
+            console.log(event);
+            const divId = event.currentTarget.name;
+            const graph = document.getElementById(divId);
+            html2canvas(graph).then((canvas) => {
+                const link = document.createElement("a");
+                link.download = `${divId}.png`;
+                link.href = canvas.toDataURL();
+                link.click();
+            })
+        }
+    </script>
+
+</body>
+<style>
+    body {
+        box-sizing: border-box;
+        padding: 3rem;
+    }
+
+    section {
+        margin-bottom: 1rem;
+    }
+</style>
+
+</html>
